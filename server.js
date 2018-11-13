@@ -11,6 +11,10 @@ const express = require('express');
 
 const app = express();
 
+const logger = require('./middleware/logger');
+
+app.use(logger);
+
 app.use(express.static('public'));
 
 app.get('/api/notes', (request, response) => {
@@ -22,7 +26,7 @@ app.get('/api/notes', (request, response) => {
   // this in this context refers to "request 1" on line 24. .filter(function, thisValue). this refers to this value in context of .filter.
 
   let results = data.filter(titleContains, request1); 
-  response.json(results);
+  response.json(data, results);
 });
 
 app.get('/api/notes/:id', (request, response) => {
